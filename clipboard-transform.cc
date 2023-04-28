@@ -20,8 +20,9 @@ namespace {
 
 int main()
 {
-	for(std::string l; getline(std::cin, l);)
-		std::cout << transform_line(l);
+	std::string s;
+	std::cin >> s;
+	std::cout << transform_line(s);
 }
 
 namespace {
