@@ -10,8 +10,8 @@
 
 ## example with wl-clipboard
 
-* wl-paste -p | clipboard-transform | wl-copy -p
+* wl-paste -p | clipboard-transform | wl-copy -p # https://github.com/bugaevc/wl-clipboard
 
 ## build
 
-ninja
+* ninja # requires C++20
