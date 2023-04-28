@@ -1,0 +1,9 @@
+cflags = -std=c++20 -Wall -Wextra -Werror -O3 -pedantic
+cc = g++
+
+name = clipboard-transform
+
+rule compile
+  command = $cc $cflags $in -o $out
+
+build $name: compile $name.cc
