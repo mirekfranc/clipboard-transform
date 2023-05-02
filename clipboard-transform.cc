@@ -8,12 +8,16 @@ namespace {
 	constexpr const std::string_view kernel_url = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=";
 	constexpr const std::string_view bugzilla_url = "https://bugzilla.suse.com/show_bug.cgi?id=";
 	constexpr const std::string_view bsc_id = "bsc#";
+	constexpr const std::string_view gcc_url = "https://gcc.gnu.org/bugzilla/show_bug.cgi?id=";
+	constexpr const std::string_view gcc_id = "PR";
 
 	bool is_bug_url(const std::string& l) { return l.starts_with(bugzilla_url); }
 	bool is_upstream_url(const std::string& l) { return l.starts_with(kernel_url); }
 	bool is_bsc(const std::string& l) { return l.starts_with(bsc_id); }
 	bool is_bugn(const std::string& l) { return l.size() < 8 && std::ranges::all_of(l, ::isdigit); }
 	bool is_hash(const std::string& l) { return l.size() > 7 && std::ranges::all_of(l, ::isxdigit); }
+	bool is_gcc_id(const std::string& l) { return l.starts_with(gcc_id); }
+	bool is_gcc_url(const std::string& l) { return l.starts_with(gcc_url); }
 
 	std::string transform_line(const std::string&);
 }
@@ -38,6 +42,10 @@ namespace {
 			return std::string(bugzilla_url) + l;
 		else if (is_hash(l))
 			return std::string(kernel_url) + l;
+		else if (is_gcc_id(l))
+			return std::string(gcc_url) + l.substr(gcc_id.size());
+		else if (is_gcc_url(l))
+			return std::string(gcc_id) + l.substr(gcc_url.size());
 		return l;
 	}
 }
