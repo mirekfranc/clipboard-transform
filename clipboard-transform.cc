@@ -11,6 +11,8 @@ namespace {
 	constexpr const std::string_view bnc_id = "bnc";
 	constexpr const std::string_view gcc_url = "https://gcc.gnu.org/bugzilla/show_bug.cgi?id=";
 	constexpr const std::string_view gcc_id = "PR";
+	constexpr const std::string_view git_a = "a/";
+	constexpr const std::string_view git_b = "b/";
 
 	bool is_bug_url(const std::string& l) { return l.starts_with(bugzilla_url); }
 	bool is_upstream_url(const std::string& l) { return l.starts_with(kernel_url); }
@@ -20,6 +22,7 @@ namespace {
 	bool is_hash(const std::string& l) { return l.size() > 7 && std::ranges::all_of(l, ::isxdigit); }
 	bool is_gcc_id(const std::string& l) { return l.starts_with(gcc_id); }
 	bool is_gcc_url(const std::string& l) { return l.starts_with(gcc_url); }
+	bool is_git_path(const std::string& l) { return l.starts_with(git_a) || l.starts_with(git_b); }
 
 	std::string transform_line(const std::string&);
 }
@@ -50,6 +53,8 @@ namespace {
 			return std::string(gcc_url) + l.substr(gcc_id.size());
 		else if (is_gcc_url(l))
 			return std::string(gcc_id) + l.substr(gcc_url.size());
+		else if (is_git_path(l))
+			return l.substr(git_a.size());
 		return l;
 	}
 }
